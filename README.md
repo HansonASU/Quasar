@@ -8,24 +8,37 @@ Quasar is a command-line chatbot that uses OpenAI’s GPT-3.5-turbo model to gen
 ### Setup
 1. Clone the repository:
 Copy code:
-git clone https://github.com/HansonASU/Quasar.git cd Quasar 
+```
+git clone https://github.com/HansonASU/Quasar.git 
+```
+```cd Quasar 
+```
 
 2. Set up an environment variable with your OpenAI API key:
 
 * For Linux/macOS:
 Copy code:
+```
 export OPENAI_API_KEY=your_api_key_here 
+```
 
 * For Windows (Command Prompt):
 Copy code:
+```
 set OPENAI_API_KEY=your_api_key_here 
+```
 
 * For Windows (PowerShell):
-Copy code$env:OPENAI_API_KEY=“your_api_key_here” 
+Copy code
+```
+$env:OPENAI_API_KEY=“your_api_key_here” 
+````
 
 3. Compile and run the project:
 Copy code:
+```
 cargo build —release cargo run —release 
+```
 
 The chatbot should now be running, and you can start chatting with it.
 
