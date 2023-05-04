@@ -10,8 +10,7 @@ Quasar is a command-line chatbot that uses OpenAI’s GPT-3.5-turbo model to gen
 Copy code:
 ```
 git clone https://github.com/HansonASU/Quasar.git 
-```
-```cd Quasar 
+cd Quasar 
 ```
 
 2. Set up an environment variable with your OpenAI API key:
