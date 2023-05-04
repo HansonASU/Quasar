@@ -82,7 +82,7 @@ async fn generate_response(
     let req = OpenAIRequest {
         model: "gpt-3.5-turbo",
         messages: chat_messages,
-        max_tokens: 50,
+        max_tokens: 200,
     };
 
     let res = client
