@@ -1,4 +1,4 @@
-use reqwest::Client;
+
 use serde::{Deserialize, Serialize};
 use serde_json;
 use std::env;
@@ -82,7 +82,7 @@ async fn generate_response(
     let req = OpenAIRequest {
         model: "gpt-3.5-turbo",
         messages: chat_messages,
-        max_tokens: 200,
+        max_tokens: 3000,
     };
 
     let res = client
