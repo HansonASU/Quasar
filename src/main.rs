@@ -1,4 +1,4 @@
-
+use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use serde_json;
 use std::env;
