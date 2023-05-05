@@ -51,7 +51,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 println!();
                 println!("You: {}", previous_input.trim());
             }
-            previous_input = input.clone();
         }
 
         let prompt = format!("User: {}\nQuasar:", input.trim());
@@ -63,7 +62,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("Copy (c) | Regenerate (r)");
     }
 }
-
 #[cfg(target_family = "unix")]
 fn clear_terminal() {
     print!("\x1B[2J\x1B[1;1H");
