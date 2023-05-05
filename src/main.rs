@@ -4,6 +4,7 @@ use serde_json;
 use std::env;
 use std::io;
 use std::io::Write;
+use copypasta::{ClipboardContext, ClipboardProvider};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -18,6 +19,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut first_iteration = true;
     let mut previous_input = String::new();
+    let mut previous_response = String::new();
 
     loop {
         let mut input = String::new();
@@ -35,17 +37,30 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         io::stdout().flush()?;
         io::stdin().read_line(&mut input)?;
 
-        if !previous_input.is_empty() {
-            println!();
-            println!("You: {}", previous_input.trim());
+        if input.trim().eq_ignore_ascii_case("c") {
+            // Copy the last response to the clipboard
+            let mut clipboard_context = ClipboardContext::new().unwrap();
+            clipboard_context.set_contents(previous_response.clone()).unwrap();
+            println!("Response copied to clipboard.");
+            continue;
+        } else if input.trim().eq_ignore_ascii_case("r") {
+            // Resend the last question
+            input = previous_input.clone();
+        } else {
+            if !previous_input.is_empty() {
+                println!();
+                println!("You: {}", previous_input.trim());
+            }
+            previous_input = input.clone();
         }
 
         let prompt = format!("User: {}\nQuasar:", input.trim());
-        previous_input = input.clone();
 
         let response = generate_response(&client, &prompt).await?;
+        previous_response = response.clone();
 
         println!("Quasar: {}", response);
+        println!("Copy (c) | Regenerate (r)");
     }
 }
 
