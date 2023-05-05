@@ -13,6 +13,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .default_headers(headers_from_api_key(api_key))
         .build()?;
 
+    // Clear the terminal screen
+    clear_terminal();
+
     loop {
         let mut input = String::new();
         print!("You: ");
@@ -23,6 +26,58 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         let response = generate_response(&client, &prompt).await?;
 
         println!("Chatbot: {}", response);
+    }
+}
+
+#[cfg(target_family = "unix")]
+fn clear_terminal() {
+    print!("\x1B[2J\x1B[1;1H");
+    io::stdout().flush().unwrap();
+}
+
+#[cfg(target_family = "windows")]
+fn clear_terminal() {
+    let output_handle = winapi::um::processenv::GetStdHandle(winapi::um::winbase::STD_OUTPUT_HANDLE);
+    let mut csbi: winapi::um::wincon::CONSOLE_SCREEN_BUFFER_INFO = unsafe { std::mem::zeroed() };
+    let csbi_ptr = &mut csbi as *mut winapi::um::wincon::CONSOLE_SCREEN_BUFFER_INFO;
+
+    if unsafe { winapi::um::wincon::GetConsoleScreenBufferInfo(output_handle, csbi_ptr) } == 0 {
+        return;
+    }
+
+    let cells = csbi.dwSize.X as u32 * csbi.dwSize.Y as u32;
+    let mut chars_written = 0u32;
+    let coord = winapi::um::wincon::COORD { X: 0, Y: 0 };
+    let fill_char = ' ' as u16;
+
+    if unsafe {
+        winapi::um::wincon::FillConsoleOutputCharacterW(
+            output_handle,
+            fill_char,
+            cells,
+            coord,
+            &mut chars_written as *mut u32,
+        )
+    } == 0
+    {
+        return;
+    }
+
+    if unsafe {
+        winapi::um::wincon::FillConsoleOutputAttribute(
+            output_handle,
+            csbi.wAttributes,
+            cells,
+            coord,
+            &mut chars_written as *mut u32,
+        )
+    } == 0
+    {
+        return;
+    }
+
+    unsafe {
+        winapi::um::wincon::SetConsoleCursorPosition(output_handle, coord);
     }
 }
 
