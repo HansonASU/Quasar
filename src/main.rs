@@ -18,7 +18,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     clear_terminal();
 
     let mut first_iteration = true;
-    let mut previous_input = String::new();
+    let previous_input = String::new();
     let mut previous_response = String::new();
 
     loop {
