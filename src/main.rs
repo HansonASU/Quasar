@@ -16,16 +16,36 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Clear the terminal screen
     clear_terminal();
 
+    let mut first_iteration = true;
+    let mut previous_input = String::new();
+
     loop {
         let mut input = String::new();
-        print!("You: ");
+
+        if first_iteration {
+            println!("What do you want to talk about?");
+            println!();
+            print!("You: ");
+            first_iteration = false;
+        } else {
+            println!(); // Add a newline before the user's prompt
+            print!("You: ");
+        }
+
         io::stdout().flush()?;
         io::stdin().read_line(&mut input)?;
 
-        let prompt = format!("User: {}\nChatbot:", input.trim());
+        if !previous_input.is_empty() {
+            println!();
+            println!("You: {}", previous_input.trim());
+        }
+
+        let prompt = format!("User: {}\nQuasar:", input.trim());
+        previous_input = input.clone();
+
         let response = generate_response(&client, &prompt).await?;
 
-        println!("Chatbot: {}", response);
+        println!("Quasar: {}", response);
     }
 }
 
