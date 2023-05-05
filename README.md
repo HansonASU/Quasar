@@ -42,10 +42,10 @@ cargo build —release cargo run —release
 The chatbot should now be running, and you can start chatting with it.
 
 ### Usage
-Once the application is running, you will see a prompt that says “You: “. Type your message and press Enter to send it. The chatbot will generate a response, which will be displayed as “Chatbot: [response]”.
+Once the application is running, you will see a prompt that says “You: “. Type your message and press Enter to send it. The chatbot will generate a response, which will be displayed as “Quasar: [response]”.
 To exit the application, press Ctrl + C.
 
-Note: There is a line in main.rs, `max_tokens:` that is set to 200. This is the max tokens the API will use for the reply. Feel free to set this as you like.
+Note: There is a line in main.rs, `max_tokens:` that is set to 3000. This is the max tokens the API will use for the reply. Feel free to set this as you like.
 
 ### Contributing
 If you find any issues, please feel free to create an issue on GitHub. Pull requests are also welcome!
